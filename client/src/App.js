@@ -1,3 +1,5 @@
+// https://www.youtube.com/watch?v=E4V6nbP_NoQ&t=740s
+
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
@@ -100,8 +102,8 @@ const App = () => {
   const socketRef = useRef();
 
   useEffect(() => {
-    socketRef.current = io.connect('/')
-    // прописал в package.json proxy:8000, поэтому тут пишем просто слэш
+    socketRef.current = io.connect() // транспорт - фром итернет ///   '', { transports: ['websocket'] }  ///
+    // прописал в package.json proxy:8000, поэтому тут пишем просто слэш // УБРАЛ уже
 
     socketRef.current.on('your id', id => { // получаем наш id от сервера и записываем его в стейт
       setYourID(id)
@@ -110,7 +112,7 @@ const App = () => {
     socketRef.current.on('message', (message) => {
       recievedMessage(message)
     })
-  })
+  }, [])
 
 
   function recievedMessage(message) {
